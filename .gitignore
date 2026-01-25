@@ -1,0 +1,21 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Virtual env
+venv/
+.venv/
+
+# Build artifacts
+*.egg-info/
+dist/
+build/
+
+# Audio outputs
+*.wav
+*.mp3
+
+# OS
+.DS_Store
+Thumbs.db
