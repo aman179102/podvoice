@@ -56,7 +56,7 @@ with the Coqui XTTS v2 model.
 
 ▶️ Demo audio: 
 [podvoice-demo.mp3](https://github.com/user-attachments/files/24844896/output1.mp3)
-
+<audio src="https://github.com/user-attachments/files/24844896/output1.mp3" controls ></audio>
 
 ---
 
