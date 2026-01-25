@@ -48,6 +48,18 @@ built on stable open-source components.
 
 ---
 
+## 🎧 Demo
+
+This audio was generated locally using Podvoice
+from a Markdown script (`examples/demo.md`)
+with the Coqui XTTS v2 model.
+
+▶️ Demo audio: 
+[podvoice-demo.mp3](https://github.com/user-attachments/files/24844896/output1.mp3)
+
+
+---
+
 ## Input format
 
 Podvoice expects a Markdown file with blocks like this:
