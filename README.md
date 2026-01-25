@@ -50,13 +50,11 @@ built on stable open-source components.
 
 ## 🎧 Demo
 
-This audio was generated locally using Podvoice
-from a Markdown script (`examples/demo.md`)
-with the Coqui XTTS v2 model.
+<div align="center">
+  
+https://github.com/user-attachments/assets/663e0f28-d95b-4068-951f-fd22dd778e1d
 
-▶️ Demo audio: 
-[podvoice-demo.mp3](https://github.com/user-attachments/files/24844896/output1.mp3)
-<audio src="https://github.com/user-attachments/files/24844896/output1.mp3" controls ></audio>
+</div>
 
 ---
 
