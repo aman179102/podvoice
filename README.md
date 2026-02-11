@@ -87,7 +87,7 @@ extensions.
 
 ### 1. Prerequisites
 
-- Python **3.10+**
+- Python **3.10**
 - `ffmpeg` installed on your system (required by `pydub`)
 - A stable internet connection **only for the first run**, so that the
   pre-trained XTTS v2 model can be downloaded and cached locally.
