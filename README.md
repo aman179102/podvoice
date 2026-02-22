@@ -1,4 +1,3 @@
-
 ---
 
 # 🧠 **Podvoice**
@@ -77,6 +76,16 @@ Rules:
 * Text continues until the next speaker block
 * Blank lines are allowed
 
+
+---
+
+## 🎧 Demo
+
+<div align="center">
+  
+https://github.com/user-attachments/assets/663e0f28-d95b-4068-951f-fd22dd778e1d
+
+</div>
 
 ---
 
