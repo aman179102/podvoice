@@ -79,11 +79,30 @@ Rules:
 
 ---
 
-## 🎧 Demo
+## ▶️ Demo Video
 
 <div align="center">
   
-https://github.com/user-attachments/assets/663e0f28-d95b-4068-951f-fd22dd778e1d
+
+
+https://github.com/user-attachments/assets/c9e9c5f0-ce03-4d71-952f-927cab55bd83
+
+
+
+</div>
+
+## 🎧 Demo Audio
+
+<div align="center">
+  
+
+
+https://github.com/user-attachments/assets/6f468a4f-c4c9-446c-a6b9-b365c3e7f131
+
+
+
+
+
 
 </div>
 
