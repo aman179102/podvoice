@@ -1,254 +1,283 @@
-# Podvoice
-
-Local-first, open-source CLI that turns simple Markdown scripts into
-multi-speaker audio using Coqui XTTS v2.
-
-Podvoice is designed for developers who want a practical way to turn
-podcast-style scripts or conversational content into audio, without
-cloud services or paid APIs.
 
 ---
 
-## Why this tool exists
+# 🧠 **Podvoice**
 
-- Many TTS tools are tied to proprietary cloud APIs.
-- Podcast creators and developers often just want a simple, script-based
-  workflow.
-- Running everything locally gives you full control over data,
-  reproducibility, and cost.
+Local-first, open-source CLI that turns simple Markdown scripts into
+**multi-speaker audio** using **Coqui XTTS v2**.
 
-Podvoice aims to be a small, honest, hackable starting point: no
-research complexity, no training code, just a clear command line tool
-built on stable open-source components.
+Podvoice is built for developers who want a **boring, reliable, offline**
+text-to-speech workflow — no cloud APIs, no subscriptions, no vendor lock-in.
+
+Runs on **Linux, Windows, macOS, and FreeBSD**.
+
+---
+
+## Why Podvoice exists
+
+* Most modern TTS tools depend on proprietary cloud services
+* Developers want reproducible, script-based workflows
+* Podcasts and narration should not require paid APIs
+
+Podvoice is intentionally:
+
+* Small
+* Honest
+* Hackable
+* Local-first
+
+No training pipelines.
+No research code.
+Just a clean CLI built on stable open-source components.
 
 ---
 
 ## Features
 
-- **Markdown-based scripts**
-  Write your content as a `.md` file with clear speaker blocks.
-
-- **Multiple logical speakers**
-  Each speaker name is mapped consistently to a voice in the XTTS model.
-
-- **Single output file**
-  Podvoice generates one stitched audio file for the whole script.
-
-- **WAV or MP3 export**
-  WAV by default, MP3 when the output path ends with `.mp3`.
-
-- **Local-only inference**
-  Uses the pre-trained Coqui XTTS v2 model, downloaded once and cached.
-
-- **CPU-friendly by default**
-  Runs on CPU out of the box; GPU is optional if available.
-
-- **Beginner-friendly code**
-  Small, modular Python 3.10+ codebase with comments and clear structure.
+* **Markdown-based scripts**
+* **Multiple logical speakers**
+* **Deterministic voice assignment**
+* **Single stitched output file**
+* **WAV or MP3 export**
+* **Local-only inference**
+* **CPU-first (GPU optional)**
+* **Cross-platform support**
 
 ---
 
-## 🎧 Demo
+## Supported platforms
 
-<div align="center">
-  
-https://github.com/user-attachments/assets/663e0f28-d95b-4068-951f-fd22dd778e1d
-
-</div>
+| Platform | Status            | Notes                  |
+| -------- | ----------------- | ---------------------- |
+| Linux    | ✅ Fully supported | Primary dev platform   |
+| macOS    | ✅ Fully supported | Intel + Apple Silicon  |
+| Windows  | ✅ Fully supported | PowerShell             |
+| FreeBSD  | ✅ Supported       | Requires ffmpeg        |
+| WSL2     | ✅ Supported       | Recommended on Windows |
 
 ---
 
 ## Input format
 
-Podvoice expects a Markdown file with blocks like this:
+Podvoice consumes Markdown files with speaker blocks:
 
 ```markdown
-[SpeakerA | calm]
-Hello and welcome to the show.
+[Host | calm]
+Welcome to the show.
 
-[SpeakerB | excited]
-Aaj hum AI ke baare mein baat karenge.
+[Guest | warm]
+If this sounds useful, try writing your own script
+and see how easily Markdown becomes audio.
 ```
 
 Rules:
 
-- **Speaker name is required**.
-- **Emotion is optional** and can be any free-form tag.
-- Text continues until the next `[Speaker | emotion]` block.
-- Blank lines are allowed inside a block.
+* Speaker name is **required**
+* Emotion tag is **optional**
+* Text continues until the next speaker block
+* Blank lines are allowed
 
-In v0.1, the `emotion` tag is parsed and preserved but not interpreted by
-XTTS directly. You can still use it for your own tooling or future
-extensions.
 
 ---
 
-## Quick start
+## Quick start (ALL operating systems)
 
-### 1. Prerequisites
+### 1️⃣ System requirements (common)
 
-- Python **3.10**
-- `ffmpeg` installed on your system (required by `pydub`)
-- A stable internet connection **only for the first run**, so that the
-  pre-trained XTTS v2 model can be downloaded and cached locally.
-- Enough disk space for the model weights (several GB is recommended).
+Required everywhere:
 
-On Ubuntu/Debian, you can typically install ffmpeg with:
+* **Python 3.10.x**
+* **ffmpeg**
+* Internet access **only for first run**
+* ~5–8 GB free disk space (model cache)
 
-```bash
-sudo apt-get install ffmpeg
-```
+---
 
-### 2. Install dependencies
+### 2️⃣ Install system dependencies
 
-From the project root:
+#### 🐧 Linux (Ubuntu / Debian)
 
 ```bash
-pip install -r requirements.txt
+sudo apt update
+sudo apt install -y python3.10 python3.10-venv ffmpeg git
 ```
 
-This will install:
+---
 
-- PyTorch + torchaudio
-- Coqui TTS (including XTTS v2)
-- pydub
-- Typer + Rich
-- The `podvoice` package itself (editable install)
-
-### 3. Run the demo
-
-From the project root:
+#### 🍎 macOS (Homebrew)
 
 ```bash
-podvoice render examples/demo.md --out demo.wav
+brew install python@3.10 ffmpeg git
 ```
 
-or to export MP3:
+---
+
+#### 🪟 Windows (PowerShell)
+
+```powershell
+winget install Python.Python.3.10
+winget install ffmpeg
+winget install Git.Git
+```
+
+Restart the terminal after installing Python.
+
+---
+
+#### 🐡 FreeBSD
+
+```sh
+pkg install python310 ffmpeg git
+```
+
+---
+
+### 3️⃣ Clone the repository
 
 ```bash
-podvoice render examples/demo.md --out demo.mp3
+git clone https://github.com/aman179102/podvoice.git
+cd podvoice
 ```
 
-On first run, Coqui TTS will download the XTTS v2 model and cache it in
-your local environment. Subsequent runs reuse the cached model.
+---
+
+## Setup (recommended path)
+
+### 🐧 Linux / 🍎 macOS / 🐡 FreeBSD
+
+```bash
+chmod +x bootstrap.sh
+./bootstrap.sh
+```
+
+This script will:
+
+* Verify Python 3.10
+* Create a local `.venv`
+* Install fully pinned dependencies from `requirements.lock`
+* Install `podvoice` in editable mode
+
+---
+
+### 🪟 Windows (PowerShell)
+
+#### One-time: allow local scripts
+
+```powershell
+Set-ExecutionPolicy -Scope CurrentUser -ExecutionPolicy RemoteSigned
+```
+
+#### Run bootstrap
+
+```powershell
+.\bootstrap.ps1
+```
+
+---
+
+### Activate the environment
+
+#### Linux / macOS / FreeBSD
+
+```bash
+source .venv/bin/activate
+```
+
+#### Windows
+
+```powershell
+.venv\Scripts\Activate.ps1
+```
+
+---
+
+## Run the demo
+
+```bash
+podvoice examples/demo.md --out demo.wav
+```
+
+Or export MP3:
+
+```bash
+podvoice examples/demo.md --out demo.mp3
+```
+
+On first run, Coqui XTTS v2 model weights will be downloaded and cached locally.
+Subsequent runs reuse the cache.
 
 ---
 
 ## CLI usage
 
-The main command is:
-
 ```bash
-podvoice render SCRIPT.md --out OUTPUT
+podvoice SCRIPT.md --out OUTPUT
 ```
 
-Basic example:
+Examples:
 
 ```bash
-podvoice render examples/demo.md --out output.wav
+podvoice examples/demo.md --out output.wav
 ```
-
-With explicit options:
 
 ```bash
-podvoice render \
-  examples/demo.md \
-  --out podcast.mp3 \
-  --language en \
-  --device cpu
+podvoice examples/demo.md --out podcast.mp3 --language en --device cpu
 ```
 
-Options:
+### Options
 
-- **`SCRIPT`** (positional)
-  Path to the input Markdown file.
+| Option             | Description               |
+| ------------------ | ------------------------- |
+| `SCRIPT`           | Input Markdown file       |
+| `--out`, `-o`      | Output `.wav` or `.mp3`   |
+| `--language`, `-l` | XTTS language code        |
+| `--device`, `-d`   | `cpu` (default) or `cuda` |
 
-- **`--out` / `-o`**
-  Output audio path. If omitted, Podvoice defaults to `SCRIPT` with a
-  `.wav` extension.
+---
 
-- **`--language` / `-l`**
-  Language code for XTTS v2 (for example `en`, `de`, `fr`). Default is
-  `en`.
+## GPU usage (optional)
 
-- **`--device` / `-d`**
-  Torch device to run on. Default is `cpu`. If you have a compatible
-  GPU, you can try `cuda`.
+If you have a compatible NVIDIA GPU:
 
-If anything goes wrong (file not found, invalid Markdown format, model
-load issue, or synthesis error), the CLI prints a clear error message
-and exits with a non-zero status code.
+```bash
+podvoice examples/demo.md --device cuda
+```
+
+If CUDA is unavailable, Podvoice safely falls back to CPU.
+
+---
+
+## Performance notes
+
+You may see warnings like:
+
+```
+Could not initialize NNPACK! Reason: Unsupported hardware.
+```
+
+✔️ These are **harmless**
+✔️ Audio generation will still complete
+❌ No action required
 
 ---
 
 ## How voices are assigned
 
-Podvoice does **not** train or fine-tune new voices. Instead, it:
+Podvoice does **not** train voices.
 
-- Uses the pre-trained Coqui XTTS v2 model.
-- Queries the list of built-in speakers exposed by the model (if
-  available).
-- Maps each `speaker` name from your Markdown script to one of these
-  built-in speakers using a deterministic hash.
+Instead:
 
-This means:
+* Uses built-in XTTS v2 speakers
+* Hashes speaker names deterministically
+* Maps each logical speaker to a stable voice
 
-- Each logical speaker name (like `Host`, `Guest`, `Narrator`) gets a
-  consistent voice for the whole script.
-- Changing the speaker name (for example, `Alice` vs `Bob`) can change
-  which built-in voice is used.
-- If the underlying XTTS speaker list changes between versions, the
-  mapping may also change.
+Implications:
 
-If the model does not expose named speakers, Podvoice falls back to the
-model's default voice for all segments.
+* Same speaker name → same voice
+* Rename speaker → possibly different voice
+* XTTS update → mapping may change
 
----
-
-## Hardware requirements
-
-This project is intentionally conservative so it can run on typical
-developer machines.
-
-- **CPU-only by default**
-  No GPU is required. The CLI passes `--device cpu` unless you override
-  it.
-
-- **Memory**
-  8 GB of RAM is a comfortable minimum. More will help when running
-  larger scripts.
-
-- **Disk space**
-  Expect several gigabytes of disk usage for the XTTS v2 model weights
-  and cache.
-
-- **Runtime**
-  On CPU, generating longer podcasts can take a while. You can monitor
-  progress via the Rich progress bar in the terminal.
-
----
-
-## Example Markdown script
-
-Here is the example provided in `examples/demo.md`:
-
-```markdown
-[Host | calm]
-Hello and welcome to the Podvoice demo.
-
-In this short example, we will generate a tiny podcast-style conversation
-from a Markdown script.
-
-[Guest | excited]
-Aaj hum AI ke baare mein baat karenge.
-Yeh saara audio aapke local machine par generate ho raha hai.
-
-[Host | calm]
-Thanks for listening. Happy hacking!
-```
-
-You can copy this file and adapt it to your own podcast episodes or
-conversational content.
+Fallback: default XTTS voice.
 
 ---
 
@@ -257,54 +286,56 @@ conversational content.
 ```text
 podvoice/
 ├── podvoice/
-│   ├── __init__.py
-│   ├── cli.py         # Typer CLI entrypoint
-│   ├── parser.py      # Markdown script parser
-│   ├── tts.py         # XTTS loading + inference
-│   ├── audio.py       # Audio concatenation/export
-│   └── utils.py       # Shared helpers
+│   ├── cli.py        # CLI entrypoint
+│   ├── parser.py     # Markdown parser
+│   ├── tts.py        # XTTS inference
+│   ├── audio.py      # Audio stitching
+│   └── utils.py
 │
 ├── examples/
-│   └── demo.md        # Sample Markdown script
+│   └── demo.md
 │
-├── requirements.txt
+├── bootstrap.sh
+├── bootstrap.ps1
+├── requirements.lock
 ├── pyproject.toml
 └── README.md
 ```
-
-Each module is small and documented so you can easily read and modify it
-for your own needs.
 
 ---
 
 ## Responsible use
 
-Podvoice uses a powerful pre-trained TTS model that can generate natural
-sounding speech. Please use it responsibly:
+Podvoice generates natural-sounding speech.
 
-- Do **not** use generated voices to impersonate real people without
-  their clear, informed consent.
-- Do **not** use this tool for harassment, fraud, or misleading
-  activities.
-- Make it clear to listeners when content has been generated or
-  synthesized.
+Do **not**:
 
-You are responsible for how you use the tool and for complying with the
-licenses of all dependencies, including the Coqui XTTS v2 model.
+* Impersonate real people without consent
+* Use generated audio for fraud or deception
+
+Always disclose synthesized content where appropriate.
+
+You are responsible for compliance with all applicable laws and licenses,
+including those of Coqui XTTS v2.
 
 ---
 
 ## Contributing
 
-This is an early, practical v0.1. Bug reports, small improvements, and
-clear documentation fixes are especially welcome.
+Podvoice is intentionally simple.
 
-Feel free to:
+Good contributions:
 
-- Open issues with script examples that fail to parse.
-- Suggest better defaults for audio normalization or silence between
-  segments.
-- Improve error messages and CLI UX.
+* Bug reports with minimal reproduction scripts
+* CLI UX improvements
+* Documentation clarity
+* Cross-platform fixes
 
-The goal is to keep Podvoice simple, understandable, and genuinely
-useful for local-first workflows.
+Non-goals:
+
+* Cloud dependencies
+* Training pipelines
+* Over-engineering
+
+**Goal:** local, boring, reliable software.
+

@@ -19,3 +19,6 @@ build/
 # OS
 .DS_Store
 Thumbs.db
+
+# ML / TTS caches
+.cache/
