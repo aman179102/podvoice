@@ -35,6 +35,10 @@ dependencies = [
   "pydub",
   "typer",
   "rich",
+  "PyYAML",
+  "fastapi",
+  "python-multipart",
+  "uvicorn",
 ]
 
 [project.scripts]
