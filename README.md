@@ -1,33 +1,27 @@
 ---
 
-# 🧠 **Podvoice**
+# 🧠 Podvoice
 
-Local-first, open-source CLI that turns simple Markdown scripts into
-**multi-speaker audio** using **Coqui XTTS v2**.
+Podvoice is a local-first AI podcast generator that converts simple Markdown scripts into **multi-speaker audio**.
 
-Podvoice is built for developers who want a **boring, reliable, offline**
-text-to-speech workflow — no cloud APIs, no subscriptions, no vendor lock-in.
+Originally built as a CLI tool, Podvoice now includes **PodVoice Studio** — a modern web-based GUI for creating, previewing, and generating AI audio visually.
+
+No cloud APIs. No subscriptions. Fully offline.
 
 Runs on **Linux, Windows, macOS, and FreeBSD**.
 
 ---
+## Why Podvoice?
 
-## Why Podvoice exists
+Most AI audio tools:
+- Require paid APIs
+- Depend on cloud services
 
-* Most modern TTS tools depend on proprietary cloud services
-* Developers want reproducible, script-based workflows
-* Podcasts and narration should not require paid APIs
-
-Podvoice is intentionally:
-
-* Small
-* Honest
-* Hackable
-* Local-first
-
-No training pipelines.
-No research code.
-Just a clean CLI built on stable open-source components.
+Podvoice is:
+- Local-first
+- Fully offline
+- Developer-friendly
+- Now with a visual GUI (PodVoice Studio)
 
 ---
 
@@ -85,17 +79,24 @@ Rules:
 
 ---
 
-## ▶️ Demo Video
+
+## ▶️ Demo Video of Podvoice Studio (GUI USAGE)
 
 <div align="center">
   
 
 
-https://github.com/user-attachments/assets/c9e9c5f0-ce03-4d71-952f-927cab55bd83
+https://github.com/user-attachments/assets/54970066-93d0-45f7-8ca0-e971b38b4c15
+
+
+
 
 
 
 </div>
+
+---
+
 
 ## 🎧 Demo Audio
 
@@ -112,7 +113,23 @@ https://github.com/user-attachments/assets/6f468a4f-c4c9-446c-a6b9-b365c3e7f131
 
 </div>
 
+
+
+## ▶️ Demo Video of Podvoice (CLI USAGE)
+
+<div align="center">
+  
+
+
+https://github.com/user-attachments/assets/c9e9c5f0-ce03-4d71-952f-927cab55bd83
+
+
+
+</div>
 ---
+
+
+
 
 ## Quick start (ALL operating systems)
 
