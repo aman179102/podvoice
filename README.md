@@ -41,6 +41,12 @@ Just a clean CLI built on stable open-source components.
 * **Local-only inference**
 * **CPU-first (GPU optional)**
 * **Cross-platform support**
+* **🎙️ Studio Web UI** — Modern single-page interface for voice selection, preview, and generation
+* **🔊 Built-in multi-speaker models** — VCTK vits and others with cached voice demos
+* **⚡ AJAX-based generation** — No page reloads, instant audio playback
+* **🎨 Modern dark theme** — Clean sidebar layout with zero scrolling
+* **📁 Profile management** — YAML-based speaker profiles with reference audio support
+* **🔄 Multi-reference audio** — Concatenate multiple clips for better voice conditioning
 
 ---
 
@@ -116,6 +122,7 @@ Required everywhere:
 
 * **Python 3.10.x**
 * **ffmpeg**
+* **espeak** or **espeak-ng** (required for Studio with built-in multi-speaker models)
 * Internet access **only for first run**
 * ~5–8 GB free disk space (model cache)
 
@@ -127,7 +134,7 @@ Required everywhere:
 
 ```bash
 sudo apt update
-sudo apt install -y python3.10 python3.10-venv ffmpeg git
+sudo apt install -y python3.10 python3.10-venv ffmpeg git espeak
 ```
 
 ---
@@ -236,6 +243,46 @@ Subsequent runs reuse the cache.
 
 ---
 
+## 🎙️ Studio Web UI
+
+Podvoice includes a modern, single-page web interface for interactive voice generation.
+
+### Launch Studio
+
+```bash
+podvoice studio --host 127.0.0.1 --port 8000
+```
+
+Then open: `http://127.0.0.1:8000`
+
+### Studio Features
+
+| Feature | Description |
+|---------|-------------|
+| **Sidebar Voice Gallery** | All built-in speakers displayed with human-friendly labels |
+| **Instant Preview** | Click any voice to hear a demo instantly (cached after first play) |
+| **Single TTS** | Type text, select voice, generate audio — no page reloads |
+| **Multi TTS (Podcast)** | Paste Markdown scripts with speaker mapping |
+| **AJAX Generation** | Audio generates and plays without leaving the page |
+| **Modern Dark Theme** | Clean aesthetic with CSS variables, no scrolling |
+
+### Studio Endpoints
+
+- `/` or `/single` — Single TTS page
+- `/multi` — Multi-speaker podcast page
+- `/demo_wav?voice=p240` — Get cached demo audio for a voice
+- `/health` — Health check endpoint
+
+### Using a Different Model
+
+Studio defaults to `tts_models/en/vctk/vits` (built-in multi-speaker). To use XTTS v2 instead:
+
+```bash
+podvoice studio --model-name tts_models/multilingual/multi-dataset/xtts_v2
+```
+
+---
+
 ## CLI usage
 
 ```bash
@@ -272,6 +319,35 @@ podvoice examples/demo.md --device cuda
 ```
 
 If CUDA is unavailable, Podvoice safely falls back to CPU.
+
+---
+
+## 📁 Profile Management
+
+Podvoice supports YAML-based speaker profiles for advanced use cases.
+
+### Profile Directory
+
+Default: `./podvoice_profiles/profiles.yaml`
+
+### Profile Format
+
+```yaml
+profiles:
+  my_custom_voice:
+    builtin_speaker: p240
+  cloned_voice:
+    reference_audio: ./samples/voice.wav
+  multi_sample_voice:
+    reference_audios:
+      - ./samples/clip1.wav
+      - ./samples/clip2.wav
+      - ./samples/clip3.wav
+```
+
+### Using Profiles
+
+Profiles are automatically loaded and can be referenced in your Markdown scripts by speaker name.
 
 ---
 
@@ -314,18 +390,22 @@ Fallback: default XTTS voice.
 ```text
 podvoice/
 ├── podvoice/
-│   ├── cli.py        # CLI entrypoint
-│   ├── parser.py     # Markdown parser
-│   ├── tts.py        # XTTS inference
-│   ├── audio.py      # Audio stitching
+│   ├── cli.py            # CLI entrypoint
+│   ├── parser.py         # Markdown parser
+│   ├── tts.py            # XTTS inference
+│   ├── audio.py          # Audio stitching
+│   ├── studio.py         # FastAPI web UI
+│   ├── profiles.py       # YAML profile management
+│   ├── preprocessing.py  # Audio preprocessing
 │   └── utils.py
 │
 ├── examples/
 │   └── demo.md
 │
+├── podvoice_profiles/    # Voice profiles directory
+│
 ├── bootstrap.sh
 ├── bootstrap.ps1
-├── requirements.lock
 ├── pyproject.toml
 └── README.md
 ```
