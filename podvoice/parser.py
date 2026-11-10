@@ -81,7 +81,7 @@ def parse_markdown_script(text: str, source: str = "<string>") -> List[Segment]:
                     f"Empty speaker name at line {lineno} in {source}."
                 )
             emotion = header_match.group("emotion")
-            emotion = emotion.strip() if emotion else None
+            emotion = (emotion.strip() if emotion else "") or None
 
             current_speaker = speaker
             current_emotion = emotion
